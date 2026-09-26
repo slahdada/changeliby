@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { X, Lock, ShieldCheck, User as UserIcon, Check } from 'lucide-react';
 import { User } from '../types';
+import { UserAvatar } from './Common/UserAvatar';
 
 interface LoginModalProps {
   onClose: () => void;
@@ -71,10 +72,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <img
-                        src={u.avatar}
-                        alt={u.fullName}
-                        className="w-9 h-9 rounded-full object-cover ring-1 ring-slate-700"
+                      <UserAvatar
+                        user={u}
+                        size="md"
+                        ringColor={isSelected ? 'ring-emerald-400' : 'ring-slate-700'}
                       />
                       <div>
                         <div className="font-semibold text-slate-100">{u.fullName}</div>

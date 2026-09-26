@@ -4,11 +4,11 @@ export const INITIAL_USERS: User[] = [
   {
     id: 'USR-001',
     username: 'admin',
-    fullName: 'محمد الفيتوري',
+    fullName: 'صلاح العياري',
     role: 'ADMIN',
-    branch: 'طرابلس - شارع المدار',
+    branch: 'تونس - شارع بورقيبة',
     pinCode: '1234',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200',
+    avatar: '/slah2.jpg',
     active: true,
   },
   {
@@ -102,7 +102,7 @@ export const INITIAL_RATES: ExchangeRate[] = [
     sellRate: 7.26, // Selling $1 for 7.26 LYD
     officialRate: 4.835, // CBL official fixing
     updatedAt: new Date().toISOString(),
-    updatedBy: 'محمد الفيتوري',
+    updatedBy: 'صلاح العياري',
     note: 'سوق المشير وسوق الصاغة - طرابلس (كاش)'
   },
   {
@@ -112,7 +112,7 @@ export const INITIAL_RATES: ExchangeRate[] = [
     sellRate: 7.39,
     officialRate: 4.835,
     updatedAt: new Date().toISOString(),
-    updatedBy: 'محمد الفيتوري',
+    updatedBy: 'صلاح العياري',
     note: 'حوالات دبي وتركيا والمصارف (سداد / يسر)'
   },
   {
@@ -122,7 +122,7 @@ export const INITIAL_RATES: ExchangeRate[] = [
     sellRate: 7.86,
     officialRate: 5.265,
     updatedAt: new Date().toISOString(),
-    updatedBy: 'محمد الفيتوري',
+    updatedBy: 'صلاح العياري',
     note: 'سوق المشير وزليتن ومصراتة (كاش)'
   },
   {
@@ -132,7 +132,7 @@ export const INITIAL_RATES: ExchangeRate[] = [
     sellRate: 9.22,
     officialRate: 6.155,
     updatedAt: new Date().toISOString(),
-    updatedBy: 'محمد الفيتوري',
+    updatedBy: 'صلاح العياري',
     note: 'سوق طرابلس الموازي'
   },
   {
@@ -142,7 +142,7 @@ export const INITIAL_RATES: ExchangeRate[] = [
     sellRate: 2.34,
     officialRate: 1.548,
     updatedAt: new Date().toISOString(),
-    updatedBy: 'محمد الفيتوري',
+    updatedBy: 'صلاح العياري',
     note: 'منفذ رأس جدير وسوق الصاغة'
   },
   {
@@ -152,7 +152,7 @@ export const INITIAL_RATES: ExchangeRate[] = [
     sellRate: 0.152,
     officialRate: 0.099,
     updatedAt: new Date().toISOString(),
-    updatedBy: 'محمد الفيتوري',
+    updatedBy: 'صلاح العياري',
     note: 'منفذ إمساعد وسوق بنغازي'
   },
   {
@@ -162,7 +162,7 @@ export const INITIAL_RATES: ExchangeRate[] = [
     sellRate: 0.222,
     officialRate: 0.139,
     updatedAt: new Date().toISOString(),
-    updatedBy: 'محمد الفيتوري',
+    updatedBy: 'صلاح العياري',
     note: 'سوق الحوالات التجارية إسطنبول'
   },
 ];

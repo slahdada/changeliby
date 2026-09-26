@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { ShieldAlert, User, ShieldCheck, Lock, Building2 } from 'lucide-react';
+import { UserAvatar } from '../Common/UserAvatar';
 
 export const UsersManager: React.FC = () => {
   const { users, currentUser, t } = useApp();
@@ -25,10 +26,10 @@ export const UsersManager: React.FC = () => {
         {users.map(u => (
           <div key={u.id} className="bg-white border border-slate-200 p-5 rounded-2xl space-y-4 shadow-sm hover:border-slate-300 transition-colors">
             <div className="flex items-center gap-3">
-              <img
-                src={u.avatar}
-                alt={u.fullName}
-                className="w-12 h-12 rounded-full object-cover ring-2 ring-yellow-500/50"
+              <UserAvatar
+                user={u}
+                size="lg"
+                ringColor={u.role === 'ADMIN' ? 'ring-yellow-500' : 'ring-slate-300'}
               />
               <div>
                 <div className="font-bold text-slate-900 text-base">{u.fullName}</div>

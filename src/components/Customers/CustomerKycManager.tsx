@@ -86,9 +86,9 @@ export const CustomerKycManager: React.FC = () => {
         </button>
       </div>
 
-      {/* Search & Filter Bar */}
-      <div className="bg-white border border-slate-200 p-4 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-sm">
-        <div className="relative flex-1 min-w-[240px]">
+      {/* Search & Filter Header */}
+      <div className="bg-white border border-slate-200 p-3 sm:p-4 rounded-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shadow-sm w-full">
+        <div className="relative flex-1 w-full">
           <Search className="w-4 h-4 text-slate-400 absolute right-3 top-3" />
           <input
             type="text"
@@ -99,12 +99,12 @@ export const CustomerKycManager: React.FC = () => {
           />
         </div>
 
-        <div className="flex items-center gap-2 text-xs">
-          <span className="text-slate-600 font-bold">التصفية حسب الـ KYC:</span>
+        <div className="flex items-center gap-2 text-xs w-full sm:w-auto justify-between sm:justify-start">
+          <span className="text-slate-600 font-bold shrink-0">حالة KYC:</span>
           <select
             value={kycFilter}
             onChange={(e) => setKycFilter(e.target.value)}
-            className="bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none"
+            className="bg-slate-50 border border-slate-300 text-slate-900 rounded-xl px-3 py-2 text-xs font-bold focus:outline-none flex-1 sm:flex-none"
           >
             <option value="ALL">جميع الحالات</option>
             <option value="VERIFIED">متحقق (Verified)</option>
@@ -114,9 +114,70 @@ export const CustomerKycManager: React.FC = () => {
         </div>
       </div>
 
-      {/* Customers Table */}
-      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
+      {/* Customers Responsive Container */}
+      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm w-full">
+        
+        {/* Mobile View: Cards instead of Table */}
+        <div className="md:hidden divide-y divide-slate-100">
+          {filteredCustomers.length === 0 ? (
+            <div className="p-6 text-center text-slate-400 text-xs font-medium">
+              لا يوجد عملاء مطابقين للبحث.
+            </div>
+          ) : (
+            filteredCustomers.map((cust) => {
+              const custTxns = getCustomerTransactions(cust.id);
+              return (
+                <div key={cust.id} className="p-3.5 space-y-2.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 font-bold text-slate-900 text-xs truncate">
+                      <UserCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span className="truncate">{cust.fullName}</span>
+                    </div>
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
+                      cust.kycStatus === 'VERIFIED' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                    }`}>
+                      {cust.kycStatus === 'VERIFIED' ? '✅ متحقق' : '⏳ مراجعة'}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200/80">
+                    <div>
+                      <span className="text-slate-400 block text-[10px]">الرقم الوطني:</span>
+                      <strong className="font-mono text-slate-700">{cust.nationalId}</strong>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block text-[10px]">رقم الهاتف:</span>
+                      <strong className="font-mono text-slate-700">{cust.phone}</strong>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block text-[10px]">إجمالي الصرف:</span>
+                      <strong className="font-mono text-emerald-700">{cust.totalExchangedLyd.toLocaleString()} د.ل</strong>
+                    </div>
+                    <div>
+                      <span className="text-slate-400 block text-[10px]">مستوى المخاطرة:</span>
+                      <span className={`font-bold ${
+                        cust.riskLevel === 'LOW' ? 'text-slate-600' : cust.riskLevel === 'MEDIUM' ? 'text-amber-700' : 'text-rose-700'
+                      }`}>
+                        {cust.riskLevel === 'LOW' ? 'منخفض' : cust.riskLevel === 'MEDIUM' ? 'متوسط' : 'مرتفع'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCustDetail(cust)}
+                    className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+                  >
+                    <span>سجل المعاملات ({custTxns.length})</span>
+                  </button>
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        {/* Desktop View: Full Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-right text-xs text-slate-700">
             <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-mono text-[11px] uppercase font-bold">
               <tr>

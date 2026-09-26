@@ -317,6 +317,30 @@ async function startServer() {
     });
   });
 
+  // Explicit PWA static endpoints
+  app.get('/manifest.webmanifest', (_req, res) => {
+    res.setHeader('Content-Type', 'application/manifest+json; charset=utf-8');
+    res.sendFile(path.resolve(__dirname, 'public', 'manifest.webmanifest'));
+  });
+
+  app.get('/sw.js', (_req, res) => {
+    res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+    res.setHeader('Service-Worker-Allowed', '/');
+    res.sendFile(path.resolve(__dirname, 'public', 'sw.js'));
+  });
+
+  // Serve public static assets (PWA manifest, sw.js, icons)
+  app.use(express.static(path.resolve(__dirname, 'public'), {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('manifest.webmanifest')) {
+        res.setHeader('Content-Type', 'application/manifest+json');
+      } else if (filePath.endsWith('sw.js')) {
+        res.setHeader('Content-Type', 'application/javascript');
+        res.setHeader('Service-Worker-Allowed', '/');
+      }
+    }
+  }));
+
   // Mount Vite or serve static assets
   if (!isProduction) {
     const vite = await createViteServer({

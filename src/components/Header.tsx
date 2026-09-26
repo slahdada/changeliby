@@ -10,6 +10,8 @@ import { PerplexityFeedModal } from './PerplexitySync/PerplexityFeedModal';
 import { CblNotificationCenterModal } from './CblPushAlerts/CblNotificationCenterModal';
 import { RateFreshnessIndicator } from './Rates/RateFreshnessIndicator';
 import { GoogleIcon } from './GoogleSearchGrounding/GoogleIcon';
+import { PWAInstallButton } from './PWA/PWAInstallButton';
+import { UserAvatar } from './Common/UserAvatar';
 
 export const Header: React.FC = () => {
   const { 
@@ -86,8 +88,11 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Actions & User Profile */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 flex-wrap">
             
+            {/* PWA Install Button (Appears only when installable or iOS guide) */}
+            <PWAInstallButton variant="header" />
+
             {/* Google Search Live Grounding Button */}
             <button
               onClick={() => setIsGoogleGroundingOpen(true)}
@@ -167,10 +172,10 @@ export const Header: React.FC = () => {
               onClick={() => setShowLoginModal(true)}
               className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 pl-2.5 pr-2 py-1.5 rounded-xl transition-colors text-right"
             >
-              <img
-                src={currentUser.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100'}
-                alt={currentUser.fullName}
-                className="w-7 h-7 rounded-full object-cover ring-2 ring-yellow-500/40"
+              <UserAvatar
+                user={currentUser}
+                size="sm"
+                ringColor="ring-yellow-500/50"
               />
               <div className="hidden sm:block text-xs">
                 <div className="font-bold text-slate-100">{currentUser.fullName}</div>

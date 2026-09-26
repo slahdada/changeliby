@@ -13,6 +13,7 @@ import { AndroidCodeViewer } from './components/AndroidCodeExporter/AndroidCodeV
 import { CblMonitorModal } from './components/CblMonitor/CblMonitorModal';
 import { CblPushToastContainer } from './components/CblPushAlerts/CblPushToastContainer';
 import { GoogleSearchGroundingModal } from './components/GoogleSearchGrounding/GoogleSearchGroundingModal';
+import { MobileBottomNav } from './components/Navigation/MobileBottomNav';
 
 const MainContent: React.FC = () => {
   const { 
@@ -28,7 +29,7 @@ const MainContent: React.FC = () => {
   const isRtl = lang === 'ar';
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-900 flex flex-col selection:bg-yellow-400 selection:text-slate-950 font-sans relative">
+    <div className="min-h-screen bg-slate-100 text-slate-900 flex flex-col selection:bg-yellow-400 selection:text-slate-950 font-sans relative w-full max-w-full overflow-x-hidden">
       
       {/* Floating Push Notification Toast Alerts for CBL rate updates */}
       <CblPushToastContainer />
@@ -37,13 +38,13 @@ const MainContent: React.FC = () => {
       <Header />
 
       {/* Body Layout */}
-      <div className="flex-1 flex flex-col lg:flex-row max-w-7xl w-full mx-auto">
+      <div className="flex-1 flex flex-col lg:flex-row max-w-7xl w-full mx-auto px-0 sm:px-2">
         
-        {/* Navigation Drawer / Sidebar */}
+        {/* Navigation Drawer / Sidebar (Desktop) */}
         <Sidebar />
 
         {/* View Viewport with Smooth Fade / Slide Transitions */}
-        <main className="flex-1 p-4 sm:p-6 overflow-y-auto overflow-x-hidden min-h-[500px]">
+        <main className="flex-1 p-2.5 sm:p-6 pb-24 lg:pb-6 overflow-y-auto overflow-x-hidden min-h-[500px] w-full max-w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -51,7 +52,7 @@ const MainContent: React.FC = () => {
               animate={{ opacity: 1, y: 0, x: 0 }}
               exit={{ opacity: 0, y: -8, x: isRtl ? -10 : 10 }}
               transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
-              className="w-full"
+              className="w-full max-w-full"
             >
               {activeTab === 'POS' && <PosTerminal />}
               {activeTab === 'RATES' && <RatesManager />}
@@ -65,6 +66,9 @@ const MainContent: React.FC = () => {
         </main>
 
       </div>
+
+      {/* Mobile Bottom Navigation Bar & Drawer */}
+      <MobileBottomNav />
 
       {/* Central Bank of Libya Live Monitor Modal */}
       <CblMonitorModal 

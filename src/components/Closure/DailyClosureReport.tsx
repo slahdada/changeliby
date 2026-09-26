@@ -127,14 +127,59 @@ export const DailyClosureReport: React.FC = () => {
 
       </div>
 
-      {/* Cash Tally Table (Expected vs Actual Counted) */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-sm">
+      {/* Cash Tally (Expected vs Actual Counted) */}
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm w-full">
         <h3 className="font-bold text-slate-900 text-sm flex items-center gap-2 border-b border-slate-100 pb-3">
           <Coins className="w-4 h-4 text-yellow-600" />
-          <span>مطابقة السيولة النقدية الفعلية (Physical Cash Tally & Reconciliation)</span>
+          <span>مطابقة السيولة النقدية الفعلية (Physical Cash Tally)</span>
         </h3>
 
-        <div className="overflow-x-auto">
+        {/* Mobile View: Cards */}
+        <div className="md:hidden space-y-2.5">
+          {drawerBalances.map((b) => {
+            const countedVal = countedBalances[b.currencyCode] ?? b.amount;
+            const variance = countedVal - b.amount;
+
+            return (
+              <div key={b.currencyCode} className="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-2 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="font-black text-slate-900 font-mono text-sm px-2 py-0.5 bg-white border border-slate-200 rounded-lg">
+                    {b.currencyCode}
+                  </span>
+                  <div className="text-left font-mono">
+                    <span className="text-[10px] text-slate-400 block">المتوقع دفترياً:</span>
+                    <strong className="text-emerald-700 font-bold">{b.amount.toLocaleString()}</strong>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-200/60">
+                  <label className="text-[11px] font-bold text-slate-600">المبلغ المجزوم فعلياً:</label>
+                  <input
+                    type="number"
+                    disabled={isClosed}
+                    value={countedVal}
+                    onChange={(e) => handleCountChange(b.currencyCode, e.target.value)}
+                    className="w-28 bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-mono font-black text-slate-900 focus:outline-none focus:border-yellow-500 disabled:opacity-60 text-center"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between text-[11px] font-bold">
+                  <span className="text-slate-500">الفارق:</span>
+                  {variance === 0 ? (
+                    <span className="text-slate-400 font-mono">متوازن (0.00)</span>
+                  ) : variance > 0 ? (
+                    <span className="text-emerald-700 font-mono">+{variance.toLocaleString()} (زيادة)</span>
+                  ) : (
+                    <span className="text-rose-700 font-mono">{variance.toLocaleString()} (عجز)</span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop View: Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-right text-xs text-slate-700">
             <thead className="bg-slate-50 text-slate-500 font-mono border-b border-slate-200 text-[11px] font-bold uppercase">
               <tr>

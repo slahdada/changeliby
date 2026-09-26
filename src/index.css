@@ -1,1 +1,93 @@
 @import "tailwindcss";
+
+/* Universal Box-Sizing & Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Prevent Horizontal Overflow Completely */
+html, body, #root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important;
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safe Area Inset Support for Modern Phones */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+body {
+  padding-top: var(--sat);
+  padding-left: var(--sal);
+  padding-right: var(--sar);
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Responsive Container Constraints */
+img, svg, video, canvas, audio, iframe, embed, object {
+  max-width: 100%;
+}
+
+/* Ensure no elements blow past screen width */
+input, select, textarea, button {
+  max-width: 100%;
+}
+
+/* Responsive Table Wrapper */
+.responsive-table-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Media Queries: Extra small mobile screens (320px to 480px) */
+@media screen and (max-width: 480px) {
+  .mobile-p-tight {
+    padding: 12px !important;
+  }
+  
+  .mobile-gap-tight {
+    gap: 8px !important;
+  }
+
+  .mobile-w-full {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Wrap long words/numbers to prevent horizontal stretching */
+  h1, h2, h3, h4, h5, p, span, div, strong {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Modal max width on small mobile */
+  .modal-dialog {
+    max-width: calc(100vw - 24px) !important;
+    margin: 12px auto !important;
+  }
+}
+
+/* Media Queries: Mobile & Tablets (481px to 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .tablet-p-medium {
+    padding: 16px !important;
+  }
+}
+
+/* Desktop Screens (769px and above) */
+@media screen and (min-width: 769px) {
+  /* Maintain rich multi-column desktop layout */
+}

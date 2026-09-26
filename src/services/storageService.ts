@@ -33,7 +33,30 @@ export const storageService = {
       localStorage.setItem(KEYS.USERS, JSON.stringify(INITIAL_USERS));
       return INITIAL_USERS;
     }
-    return JSON.parse(data);
+    const users: User[] = JSON.parse(data);
+    let modified = false;
+    const updatedUsers = users.map(u => {
+      if (u.id === 'USR-001' || u.fullName.includes('الفيتوري') || (u.role === 'ADMIN' && u.fullName !== 'صلاح العياري')) {
+        modified = true;
+        return {
+          ...u,
+          id: 'USR-001',
+          username: 'admin',
+          fullName: 'صلاح العياري',
+          role: 'ADMIN' as const,
+          branch: 'تونس - شارع بورقيبة',
+          pinCode: u.pinCode || '1234',
+          avatar: '/slah2.jpg',
+          active: true
+        };
+      }
+      return u;
+    });
+    if (modified) {
+      localStorage.setItem(KEYS.USERS, JSON.stringify(updatedUsers));
+      return updatedUsers;
+    }
+    return users;
   },
 
   saveUsers(users: User[]): void {
@@ -56,6 +79,16 @@ export const storageService = {
       return INITIAL_RATES;
     }
     const parsed: ExchangeRate[] = JSON.parse(data);
+    let ratesModified = false;
+    parsed.forEach(r => {
+      if (r.updatedBy === 'محمد الفيتوري') {
+        r.updatedBy = 'صلاح العياري';
+        ratesModified = true;
+      }
+    });
+    if (ratesModified) {
+      localStorage.setItem(KEYS.RATES, JSON.stringify(parsed));
+    }
     // If stored rates contain outdated USD rates below 7.00, automatically migrate to live actual market
     const usdRate = parsed.find(r => r.currencyCode === 'USD');
     if (usdRate && usdRate.buyRate < 7.00) {
@@ -141,11 +174,27 @@ export const storageService = {
   getCurrentUser(): User {
     const data = localStorage.getItem(KEYS.CURRENT_USER);
     if (!data) {
-      const defaultUser = INITIAL_USERS[1]; // Teller as default interactive
+      const defaultUser = INITIAL_USERS[0]; // Slah Ayari (Admin) as primary default
       localStorage.setItem(KEYS.CURRENT_USER, JSON.stringify(defaultUser));
       return defaultUser;
     }
-    return JSON.parse(data);
+    const parsed: User = JSON.parse(data);
+    if (parsed.id === 'USR-001' || parsed.fullName.includes('الفيتوري') || (parsed.role === 'ADMIN' && parsed.fullName !== 'صلاح العياري')) {
+      const migratedAdmin: User = {
+        ...parsed,
+        id: 'USR-001',
+        username: 'admin',
+        fullName: 'صلاح العياري',
+        role: 'ADMIN',
+        branch: 'تونس - شارع بورقيبة',
+        avatar: '/slah2.jpg',
+        pinCode: parsed.pinCode || '1234',
+        active: true
+      };
+      localStorage.setItem(KEYS.CURRENT_USER, JSON.stringify(migratedAdmin));
+      return migratedAdmin;
+    }
+    return parsed;
   },
 
   saveCurrentUser(user: User): void {
@@ -248,6 +297,7 @@ export const storageService = {
     localStorage.setItem(KEYS.TRANSACTIONS, JSON.stringify(INITIAL_TRANSACTIONS));
     localStorage.setItem(KEYS.DRAWER_BALANCES, JSON.stringify(INITIAL_DRAWER_BALANCES));
     localStorage.setItem(KEYS.DAILY_CLOSURE, JSON.stringify(INITIAL_DAILY_CLOSURE));
+    localStorage.setItem(KEYS.CURRENT_USER, JSON.stringify(INITIAL_USERS[0]));
     localStorage.removeItem(KEYS.CASH_ADJUSTMENTS);
     localStorage.removeItem(KEYS.CBL_ALERTS);
   }

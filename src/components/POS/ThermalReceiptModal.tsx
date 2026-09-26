@@ -24,29 +24,29 @@ export const ThermalReceiptModal: React.FC<ThermalReceiptModalProps> = ({ transa
   });
 
   return (
-    <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
       
       {/* Container */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col my-8">
+      <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col my-4 sm:my-8">
         
         {/* Modal Top Actions Bar */}
-        <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/90 sticky top-0 z-10">
+        <div className="p-3.5 sm:p-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/90 sticky top-0 z-10">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl">
-              <Printer className="w-5 h-5" />
+            <div className="p-1.5 sm:p-2 bg-emerald-500/10 text-emerald-400 rounded-xl">
+              <Printer className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-white text-sm">{t.printThermalReceipt}</h3>
-              <p className="text-[11px] text-slate-400">طباعة وصل حراري (80mm Thermal Receipt)</p>
+              <h3 className="font-bold text-white text-xs sm:text-sm">{t.printThermalReceipt}</h3>
+              <p className="text-[10px] sm:text-[11px] text-slate-400">طباعة وصل حراري (80mm)</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-lg shadow-emerald-900/40 transition"
+              className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-lg shadow-emerald-900/40 transition"
             >
-              <Printer className="w-4 h-4" />
+              <Printer className="w-3.5 h-3.5" />
               <span>{t.print}</span>
             </button>
             <button
@@ -59,11 +59,11 @@ export const ThermalReceiptModal: React.FC<ThermalReceiptModalProps> = ({ transa
         </div>
 
         {/* Printable Thermal Receipt Paper Simulation */}
-        <div className="p-6 bg-slate-950 flex justify-center overflow-x-auto">
+        <div className="p-3 sm:p-6 bg-slate-950 flex justify-center overflow-x-auto">
           
           <div 
             id="thermal-receipt"
-            className="w-[300px] bg-white text-black p-5 shadow-2xl font-mono text-xs rounded-lg select-text border border-slate-200"
+            className="w-[280px] sm:w-[300px] max-w-full bg-white text-black p-4 sm:p-5 shadow-2xl font-mono text-xs rounded-lg select-text border border-slate-200"
             style={{ color: '#000000', backgroundColor: '#ffffff' }}
           >
             {/* Bureau Header */}

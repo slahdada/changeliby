@@ -6,6 +6,8 @@ import {
   FileCheck, ShieldAlert, Smartphone, Landmark
 } from 'lucide-react';
 import { NavTab } from '../types';
+import { PWAInstallButton } from './PWA/PWAInstallButton';
+import { UserAvatar } from './Common/UserAvatar';
 
 export const Sidebar: React.FC = () => {
   const { activeTab, setActiveTab, t, currentUser, setIsCblModalOpen } = useApp();
@@ -21,10 +23,10 @@ export const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-full lg:w-64 p-3 lg:p-4 shrink-0">
+    <aside className="hidden lg:block w-64 p-4 shrink-0">
       <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
         
-        <div className="mb-4 px-1 hidden lg:block border-b border-slate-100 pb-3">
+        <div className="mb-4 px-1 border-b border-slate-100 pb-3">
           <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
             {t.appName}
           </div>
@@ -33,7 +35,7 @@ export const Sidebar: React.FC = () => {
           </div>
         </div>
 
-        <nav className="flex lg:flex-col gap-1.5 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 scrollbar-none">
+        <nav className="flex flex-col gap-1.5">
           {navItems.map((item) => {
             if (item.adminOnly && currentUser.role !== 'ADMIN') return null;
 
@@ -56,7 +58,7 @@ export const Sidebar: React.FC = () => {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveTab(item.id)}
                 style={customStyle}
-                className={`relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap lg:whitespace-normal ${
+                className={`relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
                   isActive
                     ? 'bg-slate-900 text-white shadow-md border-r-4 border-yellow-500'
                     : 'hover:bg-slate-100 text-slate-600 hover:text-slate-900'
@@ -76,8 +78,13 @@ export const Sidebar: React.FC = () => {
           })}
         </nav>
 
+        {/* PWA Install Button in Desktop Sidebar */}
+        <div className="mt-3 pt-3 border-t border-slate-100">
+          <PWAInstallButton variant="menu" />
+        </div>
+
         {/* Central Bank of Libya Live Monitor Action Button */}
-        <div className="mt-4 pt-3 border-t border-slate-100 hidden lg:block">
+        <div className="mt-3">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -98,16 +105,23 @@ export const Sidebar: React.FC = () => {
         </div>
 
         {/* Role Indicator Banner */}
-        <div className="mt-6 pt-4 border-t border-slate-100 hidden lg:block text-xs">
-          <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-            <div className="text-slate-500 text-[11px] font-bold mb-0.5">
-              {t.loggedAs}:
-            </div>
-            <div className="font-bold text-slate-900 truncate">
-              {currentUser.fullName}
-            </div>
-            <div className="text-yellow-600 font-mono text-[10px] mt-0.5 font-bold">
-              {currentUser.role === 'ADMIN' ? `⚙️ ${t.admin}` : `💼 ${t.teller}`}
+        <div className="mt-6 pt-4 border-t border-slate-100 text-xs">
+          <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-center gap-2.5">
+            <UserAvatar
+              user={currentUser}
+              size="md"
+              ringColor="ring-yellow-500/50"
+            />
+            <div className="min-w-0 flex-1">
+              <div className="text-slate-500 text-[10px] font-bold mb-0.5">
+                {t.loggedAs}:
+              </div>
+              <div className="font-bold text-slate-900 truncate text-xs">
+                {currentUser.fullName}
+              </div>
+              <div className="text-yellow-600 font-mono text-[10px] font-bold">
+                {currentUser.role === 'ADMIN' ? `⚙️ ${t.admin}` : `💼 ${t.teller}`}
+              </div>
             </div>
           </div>
         </div>
