@@ -1,0 +1,6 @@
+{
+  "name": "صرافة ليبيا - Libya Exchange POS",
+  "description": "تطبيق إدارة مكتب صرافة في ليبيا - Offline-First POS، تقصي أسعار الصرف بـ Google Search Grounding، مؤشر دقة وحداثة أسعار الصرف Status Indicator، سجل الصندوق، أسعار الصرف، نظام تنبيهات وإشعارات فورية لتحديثات مصرف ليبيا المركزي CBL، KYC للعملاء، طباعة الفواتير، وتقارير الإغلاق مع دعم العربية والفرنسية وكود Android Jetpack Compose.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
